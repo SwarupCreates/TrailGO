@@ -159,8 +159,8 @@ export function WelcomeIdleState({ weather }: WelcomeIdleStateProps) {
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        // WelcomeIdleState is positioned at bottom-[140px], so total height is its height + 140px
-        setBottomUIHeight(entry.contentRect.height + 140);
+        // WelcomeIdleState is positioned at bottom-[120px], so total height is its height + 120px
+        setBottomUIHeight(entry.contentRect.height + 120);
       }
     });
     observer.observe(containerRef.current);
@@ -168,7 +168,7 @@ export function WelcomeIdleState({ weather }: WelcomeIdleStateProps) {
   }, [setBottomUIHeight]);
 
   return (
-    <div ref={containerRef} className="pointer-events-none absolute bottom-[140px] left-0 right-0 z-20 flex flex-col px-5">
+    <div ref={containerRef} className="pointer-events-none absolute bottom-[120px] left-0 right-0 z-20 flex flex-col px-5">
       <div className="h-3 shrink-0 w-full" />
       <AnimatePresence>
         {error && (
