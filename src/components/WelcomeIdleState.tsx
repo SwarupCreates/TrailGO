@@ -36,15 +36,10 @@ export function WelcomeIdleState({ weather }: WelcomeIdleStateProps) {
     // Resolve Google Maps short links
     if (input.includes('maps.app.goo.gl') || input.includes('goo.gl/maps')) {
       try {
-        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(input)}`);
+        const res = await fetch(`https://unshorten.me/json/${input}`);
         const data = await res.json();
-        if (data.contents) {
-          const dirMatch = data.contents.match(/(https:\/\/(www\.)?google\.com\/maps\/dir\/[^"'\s]+)/);
-          if (dirMatch) {
-            textToParse = decodeURIComponent(dirMatch[1].replace(/&amp;/g, '&'));
-          } else if (data.status?.url) {
-            textToParse = decodeURIComponent(data.status.url);
-          }
+        if (data.success && data.resolved_url) {
+          textToParse = decodeURIComponent(data.resolved_url.replace(/&amp;/g, '&'));
         }
       } catch (e) {
         console.error('Failed to resolve short URL', e);
