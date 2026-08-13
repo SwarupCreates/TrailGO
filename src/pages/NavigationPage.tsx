@@ -27,6 +27,7 @@ export function NavigationPage() {
   const activityType = useNavigationStore((state) => state.activityType);
   const isRiding = useNavigationStore((state) => state.isRiding);
   const startRide = useNavigationStore((state) => state.startRide);
+  const bottomUIHeight = useNavigationStore((state) => state.bottomUIHeight);
 
   const { weather } = useWeather(liveLocation);
 
