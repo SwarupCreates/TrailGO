@@ -96,7 +96,7 @@ export function NavigationPage() {
 
       {/* Map controls and active ride stats stack */}
       <div 
-        className="pointer-events-none absolute left-0 right-0 z-20 flex flex-col justify-end gap-2 px-5 pb-5 transition-all duration-300"
+        className="pointer-events-none absolute left-0 right-0 z-20 flex flex-col justify-end gap-2 px-5 transition-all duration-300"
         style={{ bottom: `${bottomUIHeight}px` }}
       >
         <div className="flex w-full justify-end">
