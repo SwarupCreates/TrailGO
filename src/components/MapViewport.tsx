@@ -284,7 +284,7 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
         .setLngLat([location.longitude, location.latitude])
         .addTo(map);
 
-      map.flyTo({ center: [location.longitude, location.latitude], zoom: 15 });
+      map.flyTo({ center: [location.longitude, location.latitude], zoom: useArrowMarker ? 17.5 : 15 });
       setIsFollowing(true);
     } else {
       locationMarkerRef.current.setLngLat([location.longitude, location.latitude]);
@@ -305,6 +305,20 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
       }
     }
   }, [location, useArrowMarker, isFollowing]);
+
+  // Auto-zoom in when starting a ride
+  useEffect(() => {
+    if (useArrowMarker && locationMarkerRef.current && mapRef.current) {
+      const pos = locationMarkerRef.current.getLngLat();
+      mapRef.current.flyTo({
+        center: pos,
+        zoom: 17.5,
+        duration: 1000
+      });
+      setIsFollowing(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [useArrowMarker]);
 
   useEffect(() => {
     const unsubscribe = useNavigationStore.subscribe((state) => {
@@ -373,7 +387,7 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
         if (location && mapRef.current) {
           mapRef.current.easeTo({
             center: [location.longitude, location.latitude],
-            zoom: 15,
+            zoom: useArrowMarker ? 17.5 : 15,
             pitch: compassMode === 'compass' ? 50 : 0,
             duration: 1000
           });
@@ -393,7 +407,7 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
       }
     });
     return () => setMapActions(null);
-  }, [location, compassMode, setMapActions, setCompassMode, setIsFollowing]);
+  }, [location, compassMode, useArrowMarker, setMapActions, setCompassMode, setIsFollowing]);
 
   return <div ref={containerRef} className="absolute inset-0 h-full w-full" />;
 }
