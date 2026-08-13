@@ -11,8 +11,8 @@ export function BottomNav() {
   ];
 
   return (
-    <div className="pointer-events-auto absolute bottom-5 left-5 right-5 z-30 rounded-[40px] bg-white/[0.08] p-4 pb-4 shadow-lg backdrop-blur-[12px] border border-white/10">
-      <div className="flex items-center justify-between px-2">
+    <div className="pointer-events-auto absolute bottom-5 left-5 right-5 z-30 rounded-[40px] bg-white/[0.08] px-6 py-4 shadow-lg backdrop-blur-[12px] border border-white/10">
+      <div className="flex items-center justify-between">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -22,7 +22,7 @@ export function BottomNav() {
               className="flex flex-col items-center gap-1.5 transition-transform active:scale-95"
             >
               <div
-                className={`flex h-12 w-16 items-center justify-center rounded-full transition-colors ${
+                className={`flex items-center justify-center rounded-full py-1 px-3 transition-colors ${
                   isActive ? 'bg-[#ff6b00]' : 'bg-transparent hover:bg-white/5'
                 }`}
               >
