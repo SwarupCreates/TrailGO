@@ -138,18 +138,25 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
       const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (isDark) {
         try {
-          if (map.getLayer('water')) map.setPaintProperty('water', 'fill-color', '#1e2b3c'); // Navy blue
-          if (map.getLayer('waterway')) map.setPaintProperty('waterway', 'line-color', '#1e2b3c');
-          
-          if (map.getLayer('park_national_park')) map.setPaintProperty('park_national_park', 'fill-color', '#2a3a30'); // Deep moss
-          if (map.getLayer('park_nature_reserve')) map.setPaintProperty('park_nature_reserve', 'fill-color', '#2a3a30');
-          if (map.getLayer('poi_park')) map.setPaintProperty('poi_park', 'fill-color', '#2a3a30');
-          
-          // Try to change landcover/background to a bluish-grey if the layer exists
-          if (map.getLayer('landcover')) map.setPaintProperty('landcover', 'fill-color', '#15171a');
-          if (map.getLayer('background')) map.setPaintProperty('background', 'background-color', '#15171a');
+          const trySetPaintProperty = (layerId: string, prop: string, value: string) => {
+            try {
+              if (map.getLayer(layerId)) {
+                map.setPaintProperty(layerId, prop, value);
+              }
+            } catch (e) {
+              // ignore
+            }
+          };
+
+          trySetPaintProperty('water', 'fill-color', '#1e2b3c'); // Navy blue
+          trySetPaintProperty('waterway', 'line-color', '#1e2b3c');
+          trySetPaintProperty('park_national_park', 'fill-color', '#2a3a30'); // Deep moss
+          trySetPaintProperty('park_nature_reserve', 'fill-color', '#2a3a30');
+          trySetPaintProperty('poi_park', 'fill-color', '#2a3a30');
+          trySetPaintProperty('landcover', 'fill-color', '#15171a');
+          trySetPaintProperty('background', 'background-color', '#15171a');
         } catch (e) {
-          console.warn('Could not set custom layer colors', e);
+          // outer catch just in case
         }
       }
       
@@ -334,14 +341,25 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
         const progress = Math.min(Math.max(total > 0 ? covered / total : 0, 0), 1);
         
         if (mapRef.current.getLayer('active-route-line')) {
+          let stops: any[] = [];
+          if (progress <= 0.001) {
+            stops = [0, '#f97316', 1, '#f97316'];
+          } else if (progress >= 0.999) {
+            stops = [0, '#9a3412', 1, '#9a3412'];
+          } else {
+            stops = [
+              0, '#9a3412',
+              progress, '#9a3412',
+              progress + 0.0001, '#f97316',
+              1, '#f97316'
+            ];
+          }
+
           mapRef.current.setPaintProperty('active-route-line', 'line-gradient', [
             'interpolate',
             ['linear'],
             ['line-progress'],
-            0, '#9a3412',
-            Math.max(0, progress - 0.0001), '#9a3412',
-            Math.min(1, progress + 0.0001), '#f97316',
-            1, '#f97316'
+            ...stops
           ]);
         }
       }

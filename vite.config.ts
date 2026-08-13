@@ -19,12 +19,12 @@ export default defineConfig({
         background_color: '#f8fafc',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/',
-        start_url: '/',
+        scope: '/TrailGO/',
+        start_url: '/TrailGO/',
         icons: [
           {
-            src: '/pwa.svg',
-            sizes: 'any',
+            src: 'pwa.svg',
+            sizes: '192x192 512x512',
             type: 'image/svg+xml',
             purpose: 'any maskable',
           },

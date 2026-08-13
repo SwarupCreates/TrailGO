@@ -1,5 +1,5 @@
 import { useNavigationStore } from '../app/navigationStore';
-import { formatSpeed } from '../services/navigation/navigationService';
+import { formatSpeed, formatDistance } from '../services/navigation/navigationService';
 import type { TurnInstructionType } from '../types/navigation';
 
 function getTurnIcon(type?: TurnInstructionType) {
