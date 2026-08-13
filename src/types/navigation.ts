@@ -22,6 +22,7 @@ export type TurnInstruction = {
 export type NavigationState = {
   nextInstruction?: TurnInstruction;
   nearestRoutePoint?: RoutePoint;
+  nearestRoutePointIndex: number;
   remainingDistanceMeters: number;
   offRoute: boolean;
   eta?: string;

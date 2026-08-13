@@ -25,7 +25,7 @@ export function parseGpx(xml: string, fallbackName = 'Imported route'): GpxRoute
   const waypoints = Array.from(document.querySelectorAll('wpt')).map(readWaypoint);
 
   return {
-    id: crypto.randomUUID(),
+    id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `gpx-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
     name,
     points,
     waypoints,

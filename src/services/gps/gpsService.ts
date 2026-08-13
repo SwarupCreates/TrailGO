@@ -52,6 +52,7 @@ export function subscribeToDeviceOrientation(onAttitude: (attitude: DeviceAttitu
       alpha: event.alpha,
       beta: event.beta,
       gamma: event.gamma,
+      webkitCompassHeading: (event as any).webkitCompassHeading,
       timestamp: Date.now(),
     });
   };

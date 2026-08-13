@@ -14,5 +14,6 @@ export type DeviceAttitude = {
   alpha: number | null;
   beta: number | null;
   gamma: number | null;
+  webkitCompassHeading?: number | null;
   timestamp: number;
 };

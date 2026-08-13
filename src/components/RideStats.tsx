@@ -13,28 +13,31 @@ export function RideStats({ metrics, location, navigation }: RideStatsProps) {
   const stats = [
     {
       label: 'Speed',
-      value: formatSpeed(location?.speedMetersPerSecond ?? 0),
+      value: formatSpeed(location?.speedMetersPerSecond ?? 0).split(' '), // split into ['0.0', 'km/h']
     },
     {
       label: 'Route',
-      value: formatDistance(metrics?.distanceMeters ?? 0),
+      value: formatDistance(metrics?.distanceMeters ?? 0).split(' '),
     },
     {
       label: 'Remaining',
-      value: formatDistance(navigation?.remainingDistanceMeters ?? metrics?.distanceMeters ?? 0),
+      value: formatDistance(navigation?.remainingDistanceMeters ?? metrics?.distanceMeters ?? 0).split(' '),
     },
     {
       label: 'Accuracy',
-      value: location ? `${Math.round(location.accuracyMeters)} m` : '--',
+      value: location ? [`${Math.round(location.accuracyMeters)}`, 'm'] : ['--', ''],
     },
   ];
 
   return (
-    <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <section className="grid grid-cols-2 gap-3">
       {stats.map((stat) => (
-        <div key={stat.label} className="rounded border border-slate-200 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{stat.label}</p>
-          <p className="mt-1 text-2xl font-semibold text-slate-950">{stat.value}</p>
+        <div key={stat.label} className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white py-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{stat.label}</p>
+          <div className="mt-1 flex items-baseline gap-1">
+            <p className="text-4xl font-black tabular-nums tracking-tighter text-slate-950 dark:text-white">{stat.value[0]}</p>
+            {stat.value[1] && <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">{stat.value[1]}</p>}
+          </div>
         </div>
       ))}
     </section>

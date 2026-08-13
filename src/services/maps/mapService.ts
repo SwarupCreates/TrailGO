@@ -7,20 +7,10 @@ export type OfflineMapPackage = {
   format: 'pmtiles' | 'mbtiles' | 'vector-tiles' | 'geojson';
 };
 
-export function createEmptyOfflineStyle(): StyleSpecification {
-  return {
-    version: 8,
-    sources: {},
-    layers: [
-      {
-        id: 'background',
-        type: 'background',
-        paint: {
-          'background-color': '#e2e8f0',
-        },
-      },
-    ],
-  };
+export function createMapStyle(isDark: boolean): string {
+  return isDark
+    ? 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+    : 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
 }
 
 export function createVectorTileStyle(mapPackage: OfflineMapPackage): StyleSpecification {

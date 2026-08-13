@@ -21,14 +21,14 @@ export function ElevationProfile({ points }: ElevationProfileProps) {
     .join(' ');
 
   return (
-    <section className="rounded border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-slate-900">Elevation</h2>
-        <span className="text-xs text-slate-500">
-          {Math.round(min)}m to {Math.round(max)}m
+    <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-sm font-bold tracking-tight text-slate-900 dark:text-slate-100">Elevation</h2>
+        <span className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+          {Math.round(min)}m - {Math.round(max)}m
         </span>
       </div>
-      <div className="h-24 rounded bg-slate-100">
+      <div className="h-24 rounded-xl bg-slate-50 dark:bg-slate-950/50">
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="h-full w-full">
           <polyline points={polyline} fill="none" stroke="#22c55e" strokeWidth="3" vectorEffect="non-scaling-stroke" />
         </svg>

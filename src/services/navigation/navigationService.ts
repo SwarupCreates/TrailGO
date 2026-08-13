@@ -68,6 +68,7 @@ export function createNavigationState(route: GpxRoute, location: LiveLocation): 
   return {
     nextInstruction: createNextInstruction(route, snapped),
     nearestRoutePoint,
+    nearestRoutePointIndex: snapped.properties.index ?? 0,
     remainingDistanceMeters,
     offRoute,
     eta: createEta(remainingDistanceMeters, location.speedMetersPerSecond ?? defaultCruiseSpeedMetersPerSecond),

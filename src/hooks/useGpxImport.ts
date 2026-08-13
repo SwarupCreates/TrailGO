@@ -13,6 +13,9 @@ export function useGpxImport() {
     try {
       const route = await parseGpxFile(file);
       const metrics = calculateRouteMetrics(route.points);
+      
+      // Override with the actual file name, removing the .gpx extension
+      route.name = file.name.replace(/\.[^/.]+$/, "");
 
       await db.routes.put({
         id: route.id,

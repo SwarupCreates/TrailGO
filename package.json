@@ -1,17 +1,22 @@
 {
-  "name": "offline-gpx-navigation",
+  "name": "TrailGo-Beta-0.1.0",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "dev": "vite --host",
+    "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
+    "@capacitor/ios": "^8.5.0",
+    "@fontsource/google-sans-flex": "^5.3.1",
     "@turf/turf": "^7.2.0",
     "dexie": "^4.0.11",
+    "framer-motion": "^13.1.0",
     "maplibre-gl": "^5.6.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -19,8 +24,10 @@
     "zustand": "^5.0.7"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.0",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-basic-ssl": "^2.3.0",
     "@vitejs/plugin-react": "^5.2.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",

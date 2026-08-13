@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">offline-gpx-navigation</string>
+    <string name="title_activity_main">offline-gpx-navigation</string>
+    <string name="package_name">com.example.gpxnavigator</string>
+    <string name="custom_url_scheme">com.example.gpxnavigator</string>
+</resources>

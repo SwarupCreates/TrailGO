@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Offline GPX Navigator">
-  <rect width="64" height="64" rx="14" fill="#0f172a"/>
-  <path d="M15 44c8-17 15-25 22-24 4 .5 7 3 12 8" fill="none" stroke="#22c55e" stroke-width="5" stroke-linecap="round"/>
-  <path d="M40 12l10 20-12-5-12 5 14-20z" fill="#f97316"/>
+<svg width="32" height="19" viewBox="0 0 32 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="20.0689" height="5.95797" fill="#D85E07" style="fill:#D85E07;fill:color(display-p3 0.8471 0.3686 0.0275);fill-opacity:1;"/>
+<rect x="22.8926" width="8.78016" height="5.95797" fill="#D85E07" style="fill:#D85E07;fill:color(display-p3 0.8471 0.3686 0.0275);fill-opacity:1;"/>
+<rect x="20.0693" y="12.8574" width="5.33081" height="5.95797" fill="#D85E07" style="fill:#D85E07;fill:color(display-p3 0.8471 0.3686 0.0275);fill-opacity:1;"/>
+<rect x="11.6035" width="18.8146" height="5.95797" transform="rotate(90 11.6035 0)" fill="#D85E07" style="fill:#D85E07;fill:color(display-p3 0.8471 0.3686 0.0275);fill-opacity:1;"/>
+<rect x="20.0693" y="8.4668" width="10.3481" height="5.95797" transform="rotate(90 20.0693 8.4668)" fill="#D85E07" style="fill:#D85E07;fill:color(display-p3 0.8471 0.3686 0.0275);fill-opacity:1;"/>
+<rect x="31.3584" y="10.6621" width="8.15301" height="5.95797" transform="rotate(90 31.3584 10.6621)" fill="#D85E07" style="fill:#D85E07;fill:color(display-p3 0.8471 0.3686 0.0275);fill-opacity:1;"/>
 </svg>
