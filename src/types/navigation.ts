@@ -17,6 +17,7 @@ export type TurnInstruction = {
   text: string;
   point: RoutePoint;
   distanceFromStartMeters: number;
+  distanceToNextMeters: number;
 };
 
 export type NavigationState = {

@@ -66,7 +66,7 @@ export function createNavigationState(route: GpxRoute, location: LiveLocation): 
   const nearestRoutePoint = route.points[snapped.properties.index ?? 0];
 
   return {
-    nextInstruction: createNextInstruction(route, snapped),
+    nextInstruction: createNextInstruction(route, snapped, currentPoint),
     nearestRoutePoint,
     nearestRoutePointIndex: snapped.properties.index ?? 0,
     remainingDistanceMeters,
@@ -88,7 +88,7 @@ export function formatSpeed(metersPerSecond: number) {
   return `${Math.max(metersPerSecond * 3.6, 0).toFixed(1)} km/h`;
 }
 
-function createNextInstruction(route: GpxRoute, snapped: SnappedRoutePoint): TurnInstruction | undefined {
+function createNextInstruction(route: GpxRoute, snapped: SnappedRoutePoint, currentPoint: [number, number]): TurnInstruction | undefined {
   const distanceFromStartMeters = (snapped.properties.location ?? 0) * metersPerKilometer;
   const index = Math.min(snapped.properties.index ?? 0, route.points.length - 2);
   const current = route.points[index];
@@ -98,6 +98,8 @@ function createNextInstruction(route: GpxRoute, snapped: SnappedRoutePoint): Tur
   if (!current || !next) {
     return undefined;
   }
+  
+  const distanceToNextMeters = distance(currentPoint, toLngLat(next), { units: 'kilometers' }) * metersPerKilometer;
 
   if (!afterNext) {
     return {
@@ -106,6 +108,7 @@ function createNextInstruction(route: GpxRoute, snapped: SnappedRoutePoint): Tur
       text: 'Destination ahead',
       point: next,
       distanceFromStartMeters,
+      distanceToNextMeters,
     };
   }
 
@@ -120,6 +123,7 @@ function createNextInstruction(route: GpxRoute, snapped: SnappedRoutePoint): Tur
     text: instructionText(type),
     point: next,
     distanceFromStartMeters,
+    distanceToNextMeters,
   };
 }
 

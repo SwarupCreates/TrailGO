@@ -19,9 +19,6 @@ function getTurnIcon(type?: TurnInstructionType) {
 
 export function ActiveRideStatsOverlay() {
   const liveLocation = useNavigationStore((state) => state.liveLocation);
-  const isRidePaused = useNavigationStore((state) => state.isRidePaused);
-  const pauseRide = useNavigationStore((state) => state.pauseRide);
-  const resumeRide = useNavigationStore((state) => state.resumeRide);
   const nextInstruction = useNavigationStore((state) => state.navigationState?.nextInstruction);
   
   // Format speed (e.g., '21.5')
@@ -35,28 +32,27 @@ export function ActiveRideStatsOverlay() {
       className="pointer-events-none absolute left-0 right-0 z-20 flex w-full items-end justify-between px-5 transition-all duration-300"
       style={{ bottom: `${bottomUIHeight}px` }}
     >
-      <div className="flex items-end gap-2 drop-shadow-md">
-        <span className="material-symbols-outlined text-[48px] text-white" style={{ fontVariationSettings: "'wght' 600" }}>
-          {getTurnIcon(nextInstruction?.type)}
+      {/* Left: Speed */}
+      <div className="flex items-baseline gap-1 drop-shadow-md">
+        <span className="text-[64px] font-extrabold italic leading-none tracking-tighter text-white drop-shadow-md">
+          {speedVal}
         </span>
-        <div className="flex items-baseline gap-1">
-          <span className="text-[64px] font-extrabold italic leading-none tracking-tighter text-white drop-shadow-md">
-            {speedVal}
-          </span>
-          <span className="text-lg font-bold italic text-white uppercase tracking-wider drop-shadow-md mb-2">
-            {unit}
-          </span>
-        </div>
+        <span className="text-lg font-bold italic text-white uppercase tracking-wider drop-shadow-md mb-2">
+          {unit}
+        </span>
       </div>
       
-      <button
-        onClick={isRidePaused ? resumeRide : pauseRide}
-        className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/[0.08] backdrop-blur-[12px] border border-white/10 shadow-lg transition-transform hover:scale-105 active:scale-95"
-      >
-        <span className="material-symbols-outlined text-[28px] text-orange-500" style={{ fontVariationSettings: "'wght' 700" }}>
-          {isRidePaused ? 'play_arrow' : 'pause'}
+      {/* Right: Turn by Turn Navigation */}
+      <div className="flex flex-col items-center justify-end drop-shadow-md pb-3">
+        <span className="material-symbols-outlined text-[56px] text-white" style={{ fontVariationSettings: "'wght' 700" }}>
+          {getTurnIcon(nextInstruction?.type)}
         </span>
-      </button>
+        {nextInstruction?.distanceToNextMeters !== undefined && (
+          <span className="text-2xl font-black text-white mt-1 tracking-tight drop-shadow-md">
+            {formatDistance(nextInstruction.distanceToNextMeters).replace(' ', '')}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
