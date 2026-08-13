@@ -173,7 +173,7 @@ export function WelcomeIdleState({ weather }: WelcomeIdleStateProps) {
   }, [setBottomUIHeight]);
 
   return (
-    <div ref={containerRef} className="pointer-events-none absolute bottom-[140px] left-0 right-0 z-20 flex flex-col px-5">
+    <div ref={containerRef} className="pointer-events-none absolute bottom-[140px] left-0 right-0 z-20 flex flex-col px-5 pt-6">
       <AnimatePresence>
         {error && (
           <motion.div 
