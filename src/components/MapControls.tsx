@@ -5,16 +5,11 @@ export function MapControls() {
   const compassMode = useNavigationStore((state) => state.compassMode);
   const mapActions = useNavigationStore((state) => state.mapActions);
   const liveLocation = useNavigationStore((state) => state.liveLocation);
-  const bottomUIHeight = useNavigationStore((state) => state.bottomUIHeight);
-  const isRiding = useNavigationStore((state) => state.isRiding);
 
   if (!liveLocation || !mapActions) return null;
 
   return (
-    <div 
-      className="pointer-events-none absolute right-5 z-20 flex flex-col gap-3 transition-all duration-300 ease-in-out"
-      style={{ bottom: `${bottomUIHeight + (isRiding ? 80 : 20)}px` }}
-    >
+    <div className="pointer-events-none flex flex-col gap-3 transition-all duration-300 ease-in-out">
       {!isFollowing && (
         <button
           onClick={mapActions.recenter}

@@ -25,13 +25,8 @@ export function ActiveRideStatsOverlay() {
   const speedString = formatSpeed(liveLocation?.speedMetersPerSecond ?? 0);
   const [speedVal, unit] = speedString.split(' '); // '21.5' 'km/h'
 
-  const bottomUIHeight = useNavigationStore((state) => state.bottomUIHeight);
-
   return (
-    <div 
-      className="pointer-events-none absolute left-0 right-0 z-20 flex w-full items-end justify-between px-5 transition-all duration-300"
-      style={{ bottom: `${bottomUIHeight}px` }}
-    >
+    <div className="pointer-events-none flex w-full items-center justify-between transition-all duration-300">
       {/* Left: Speed */}
       <div className="flex items-baseline gap-1 drop-shadow-md">
         <span className="text-[64px] font-extrabold italic leading-none tracking-tighter text-white drop-shadow-md">
@@ -43,8 +38,8 @@ export function ActiveRideStatsOverlay() {
       </div>
       
       {/* Right: Turn by Turn Navigation */}
-      <div className="flex flex-col items-center justify-end drop-shadow-md pb-3">
-        <span className="material-symbols-outlined text-[56px] text-white" style={{ fontVariationSettings: "'wght' 700" }}>
+      <div className="flex flex-col items-center justify-center drop-shadow-md">
+        <span className="material-symbols-outlined text-[48px] text-white" style={{ fontVariationSettings: "'wght' 700" }}>
           {getTurnIcon(nextInstruction?.type)}
         </span>
         {nextInstruction?.distanceToNextMeters !== undefined && (

@@ -80,9 +80,6 @@ export function NavigationPage() {
         <ActiveRidePill />
       )}
 
-      {/* Top right map controls stack */}
-      <MapControls />
-
       {/* Map Background */}
       <div className="absolute inset-0 z-0 bg-[#0a0a0a]">
         <MapViewport 
@@ -96,9 +93,22 @@ export function NavigationPage() {
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-[500px] z-10 bg-gradient-to-t from-black/90 to-transparent" />
       </div>
 
+      {/* Map controls and active ride stats stack */}
+      <div 
+        className="pointer-events-none absolute left-0 right-0 z-20 flex flex-col justify-end gap-2 px-5 pb-5 transition-all duration-300"
+        style={{ bottom: `${bottomUIHeight}px` }}
+      >
+        <div className="flex w-full justify-end">
+          <MapControls />
+        </div>
+        
+        {activeRoute && isRiding && (
+          <ActiveRideStatsOverlay />
+        )}
+      </div>
+
       {activeRoute ? (
         <>
-          {isRiding && <ActiveRideStatsOverlay />}
           <RideBottomSheet 
             metrics={routeMetrics}
             points={activeRoute?.points}
