@@ -174,7 +174,7 @@ export function WelcomeIdleState({ weather }: WelcomeIdleStateProps) {
 
   return (
     <div ref={containerRef} className="pointer-events-none absolute bottom-[140px] left-0 right-0 z-20 flex flex-col px-5">
-      <div className="h-6 shrink-0 w-full" />
+      <div className="h-3 shrink-0 w-full" />
       <AnimatePresence>
         {error && (
           <motion.div 
