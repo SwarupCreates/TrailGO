@@ -9,7 +9,7 @@ export function TopBar() {
           <span className="material-symbols-outlined text-[24px]">menu</span>
         </button>
         <div className="flex items-center gap-2">
-          <img src="/logo.svg" alt="TrailGO" className="h-5 drop-shadow-md" />
+          <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="TrailGO" className="h-5 drop-shadow-md" />
         </div>
       </div>
 
