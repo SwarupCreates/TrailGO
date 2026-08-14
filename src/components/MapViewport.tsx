@@ -22,6 +22,8 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
   const locationMarkerRef = useRef<Marker | null>(null);
   const markerTypeRef = useRef<'dot' | 'arrow' | null>(null);
   const compassModeRef = useRef<'user' | 'compass'>('user');
+  const isFollowingRef = useRef<boolean>(true);
+  const latestHeadingRef = useRef<number | null>(null);
 
   const compassMode = useNavigationStore((state) => state.compassMode);
   const isFollowing = useNavigationStore((state) => state.isFollowing);
@@ -48,6 +50,10 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
   useEffect(() => {
     compassModeRef.current = compassMode;
   }, [compassMode]);
+
+  useEffect(() => {
+    isFollowingRef.current = isFollowing;
+  }, [isFollowing]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) {
@@ -296,9 +302,10 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
         markerTypeRef.current = currentMarkerType;
       }
       
-      if (isFollowing && compassModeRef.current !== 'compass') {
+      if (isFollowing) {
         map.easeTo({ 
           center: [location.longitude, location.latitude],
+          bearing: compassModeRef.current === 'compass' ? (latestHeadingRef.current ?? map.getBearing()) : 0,
           duration: 1000,
           easing: (t) => t
         });
@@ -323,27 +330,27 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
   useEffect(() => {
     const unsubscribe = useNavigationStore.subscribe((state) => {
       const attitude = state.deviceAttitude;
+      const loc = state.liveLocation;
       let heading: number | null = null;
-      if (attitude?.webkitCompassHeading) {
+
+      // Prioritize GPS heading when actively riding and moving (> 1 m/s or ~3.6 km/h)
+      // This prevents the map from wildly rotating due to compass gimbal lock when the phone is tilted.
+      if (state.isRiding && loc?.speedMetersPerSecond && loc.speedMetersPerSecond > 1 && loc.headingDegrees !== null && !isNaN(loc.headingDegrees)) {
+        heading = loc.headingDegrees;
+      } else if (attitude?.webkitCompassHeading) {
         heading = attitude.webkitCompassHeading;
       } else if (attitude?.absolute && attitude.alpha !== null) {
-        heading = 360 - attitude.alpha;
+        const screenOrientation = typeof window !== 'undefined' && window.screen?.orientation?.angle ? window.screen.orientation.angle : 0;
+        heading = 360 - attitude.alpha + screenOrientation;
       } else {
-        heading = state.liveLocation?.headingDegrees ?? null;
+        heading = loc?.headingDegrees ?? null;
       }
 
       if (heading !== null) {
+        latestHeadingRef.current = heading;
         if (locationMarkerRef.current) {
           const svg = locationMarkerRef.current.getElement().querySelector('svg');
           if (svg) svg.style.transform = `rotate(${heading}deg)`;
-        }
-
-        if (compassModeRef.current === 'compass' && heading !== null && mapRef.current) {
-          mapRef.current.easeTo({
-            bearing: heading,
-            duration: 200,
-            easing: (t) => t
-          });
         }
       }
 
@@ -389,6 +396,7 @@ export function MapViewport({ route, approachRoute, location, useArrowMarker = f
             center: [location.longitude, location.latitude],
             zoom: useArrowMarker ? 17.5 : 15,
             pitch: compassMode === 'compass' ? 50 : 0,
+            bearing: compassMode === 'compass' ? (latestHeadingRef.current ?? mapRef.current.getBearing()) : 0,
             duration: 1000
           });
           setIsFollowing(true);
